@@ -3,7 +3,7 @@
 
 
 StudyNotion is a fully functional ed-tech platform that enables users to create, consume, and rate educational
-content. The platform is built using the MERN stack, which includes ReactJS, NodeJS, MongoDB, and
+content.It features a unique compiler for running code in various languages directly from the platform.The platform is built using the MERN stack, which includes ReactJS, NodeJS, MongoDB, and
 ExpressJS.
 • StudyNotion aims to provide: A seamless and interactive learning experience for students, making education
 more accessible and engaging.A platform for instructors to showcase their expertise and connect with learners
@@ -18,6 +18,8 @@ across the globe.
 - User Authentication: Study Notion provides secure user registration and authentication using JWT (JSON Web Tokens). Users can sign up, log in, and manage their profiles with ease.
 
 - Courses and Lessons: Instructors can create and edit created courses. Students can enroll in courses, access course materials, and track their progress.
+
+- Compiler: Run code in multiple programming languages directly within the platform.
 
 - Progress Tracking: Study Notion allows students to track their progress in enrolled courses. They can view completed lessons, scores on quizzes and assignments, and overall course progress.
 
