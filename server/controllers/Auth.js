@@ -30,6 +30,8 @@ exports.signup = async (req, res) => {
       });
     }
 
+    // -1 specifies descending order, meaning the most recent document (latest by createdAt) comes first.
+    // limit 1 Restricts the query result to only one document. Since the documents are sorted in descending order, this retrieves the most recent OTP for the specified email.
     const response = await OTP.find({ email }).sort({ createdAt: -1 }).limit(1);
     console.log(response);
 

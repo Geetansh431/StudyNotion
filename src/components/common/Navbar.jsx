@@ -4,7 +4,7 @@ import { BsChevronDown } from "react-icons/bs"
 import { useSelector } from "react-redux"
 import { Link, matchPath, useLocation } from "react-router-dom"
 
-import logo from "../../assets/Logo/Logo-Full-Light.png"
+import logo from "../../assets/Logo/Mentorme.png"
 import { NavbarLinks } from "../../data/navbar-links"
 import { apiConnector } from "../../services/apiconnector"
 import { categories } from "../../services/apis"
@@ -40,18 +40,18 @@ function Navbar() {
 
   return (
     <div
-      className={`flex h-14 items-center justify-center border-b-[1px] border-b-richblack-700 ${
+      className={`flex h-14 items-center justify-center border-b-[1px] border-b-black ${
         location.pathname !== "/" ? "bg-richblack-800" : ""
       } transition-all duration-200`}
     >
       <div className="flex w-11/12 max-w-maxContent items-center justify-between">
         {/* Logo */}
         <Link to="/">
-          <img src={logo} alt="Logo" width={160} height={32} loading="lazy" />
+          <img src={logo} alt="Logo" width={115} height={32} loading="lazy" />
         </Link>
         {/* Navigation links */}
         <nav className="hidden md:block">
-          <ul className="flex gap-x-6 text-richblack-25">
+          <ul className="flex gap-x-6 text-black">
             {NavbarLinks.map((link, index) => (
               <li key={index}>
                 {link.title === "Catalog" ? (
@@ -113,9 +113,9 @@ function Navbar() {
         <div className="hidden items-center gap-x-4 md:flex">
           {user && user?.accountType !== ACCOUNT_TYPE.INSTRUCTOR && (
             <Link to="/dashboard/cart" className="relative">
-              <AiOutlineShoppingCart className="text-2xl text-richblack-100" />
+              <AiOutlineShoppingCart className="text-2xl text-black" />
               {totalItems > 0 && (
-                <span className="absolute -bottom-2 -right-2 grid h-5 w-5 place-items-center overflow-hidden rounded-full bg-richblack-600 text-center text-xs font-bold text-yellow-100">
+                <span className="absolute -bottom-2 -right-2 grid h-5 w-5 place-items-center overflow-hidden rounded-full bg-richblack-600 text-center text-xs font-bold text-black">
                   {totalItems}
                 </span>
               )}

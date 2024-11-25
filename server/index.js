@@ -6,12 +6,18 @@ const profileRoutes = require("./routes/Profile");
 const paymentRoutes = require("./routes/Payments");
 const courseRoutes = require("./routes/Course");
 const contactUsRoute = require("./routes/Contact");
+
+// to connect the database
 const database = require("./config/database");
+
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
+
 const {cloudinaryConnect } = require("./config/cloudinary");
+
 const fileUpload = require("express-fileupload");
 const dotenv = require("dotenv");
+
 
 dotenv.config();
 const PORT = process.env.PORT || 4000;
@@ -21,12 +27,15 @@ database.connect();
 //middlewares
 app.use(express.json());
 app.use(cookieParser());
+
 app.use(
 	cors({
-		origin:"https://study-notion-ai42-qw91zru5x-geetansh431s-projects.vercel.app",
+		origin:"http://localhost:3000",
 		credentials:true,
 	})
 )
+
+// stores the file in tmp directory before 
 
 app.use(
 	fileUpload({
