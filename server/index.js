@@ -30,7 +30,7 @@ app.use(cookieParser());
 
 app.use(
 	cors({
-		origin:"http://localhost:3000",
+		origin:"https://study-notion-theta-dusky.vercel.app",
 		credentials:true,
 	})
 )
