@@ -1,5 +1,6 @@
+#Live: https://study-notion-theta-dusky.vercel.app/
 
-# StudyNotion - EducationHub 📚
+# StudyNotion - EducationHub 📚 
 
 
 StudyNotion is a fully functional ed-tech platform that enables users to create, consume, and rate educational
