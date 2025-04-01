@@ -6,7 +6,7 @@ const User = require("../models/User")
 const { uploadImageToCloudinary } = require("../utils/imageUploader")
 const mongoose = require("mongoose")
 const { convertSecondsToDuration } = require("../utils/secToDuration")
-// Method for updating a profile
+
 exports.updateProfile = async (req, res) => {
   try {
     const {
@@ -19,7 +19,7 @@ exports.updateProfile = async (req, res) => {
     } = req.body
     const id = req.user.id
 
-    // Find the profile by id
+    
     const userDetails = await User.findById(id)
     const profile = await Profile.findById(userDetails.additionalDetails)
 
@@ -35,10 +35,10 @@ exports.updateProfile = async (req, res) => {
     profile.contactNumber = contactNumber
     profile.gender = gender
 
-    // Save the updated profile
+ 
     await profile.save()
 
-    // Find the updated user details
+    
     const updatedUserDetails = await User.findById(id)
       .populate("additionalDetails")
       .exec()
@@ -68,7 +68,7 @@ exports.deleteAccount = async (req, res) => {
         message: "User not found",
       })
     }
-    // Delete Assosiated Profile with the User
+    
     await Profile.findByIdAndDelete({
       _id: new mongoose.Types.ObjectId(user.additionalDetails),
     })
@@ -79,7 +79,7 @@ exports.deleteAccount = async (req, res) => {
         { new: true }
       )
     }
-    // Now Delete User
+   
     await User.findByIdAndDelete({ _id: id })
     res.status(200).json({
       success: true,

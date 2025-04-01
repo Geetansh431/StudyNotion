@@ -16,7 +16,7 @@ export default function CourseReviewModal({ setReviewModal }) {
     register,
     handleSubmit,
     setValue,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm()
 
   useEffect(() => {
@@ -26,7 +26,6 @@ export default function CourseReviewModal({ setReviewModal }) {
   }, [])
 
   const ratingChanged = (newRating) => {
-    // console.log(newRating)
     setValue("courseRating", newRating)
   }
 
@@ -43,12 +42,15 @@ export default function CourseReviewModal({ setReviewModal }) {
   }
 
   return (
-    <div className="fixed inset-0 z-[1000] !mt-0 grid h-screen w-screen place-items-center overflow-auto bg-white bg-opacity-10 backdrop-blur-sm">
-      <div className="my-10 w-11/12 max-w-[700px] rounded-lg border border-richblack-400 bg-richblack-800">
+    <div className="fixed inset-0 z-[1000] !mt-0 grid h-screen w-screen place-items-center overflow-auto bg-black bg-opacity-50 backdrop-blur-sm">
+      <div className="my-10 w-11/12 max-w-[700px] rounded-lg border border-richblack-400 bg-richblack-800 shadow-xl">
         {/* Modal Header */}
         <div className="flex items-center justify-between rounded-t-lg bg-richblack-700 p-5">
           <p className="text-xl font-semibold text-richblack-5">Add Review</p>
-          <button onClick={() => setReviewModal(false)}>
+          <button 
+            onClick={() => setReviewModal(false)}
+            className="rounded-full p-2 hover:bg-richblack-600 transition-colors"
+          >
             <RxCross2 className="text-2xl text-richblack-5" />
           </button>
         </div>
@@ -60,50 +62,69 @@ export default function CourseReviewModal({ setReviewModal }) {
               alt={user?.firstName + "profile"}
               className="aspect-square w-[50px] rounded-full object-cover"
             />
-            <div className="">
+            <div>
               <p className="font-semibold text-richblack-5">
                 {user?.firstName} {user?.lastName}
               </p>
-              <p className="text-sm text-richblack-5">Posting Publicly</p>
+              <p className="text-sm text-richblack-400">Posting Publicly</p>
             </div>
           </div>
           <form
             onSubmit={handleSubmit(onSubmit)}
             className="mt-6 flex flex-col items-center"
           >
-            <ReactStars
-              count={5}
-              onChange={ratingChanged}
-              size={24}
-              activeColor="#ffd700"
-            />
-            <div className="flex w-11/12 flex-col space-y-2">
+            <div className="mb-6">
+              <ReactStars
+                count={5}
+                onChange={ratingChanged}
+                size={30}
+                activeColor="#ffd700"
+                emptyIcon={<span className="text-2xl">★</span>}
+                filledIcon={<span className="text-2xl">★</span>}
+              />
+            </div>
+            <div className="flex w-full flex-col space-y-2">
               <label
-                className="text-sm text-richblack-5"
+                className="text-sm font-medium text-richblack-5"
                 htmlFor="courseExperience"
               >
-                Add Your Experience <sup className="text-pink-200">*</sup>
+                Share Your Experience <sup className="text-pink-200">*</sup>
               </label>
               <textarea
                 id="courseExperience"
-                placeholder="Add Your Experience"
-                {...register("courseExperience", { required: true })}
-                className="form-style resize-x-none min-h-[130px] w-full"
+                placeholder="Tell us about your experience with this course..."
+                {...register("courseExperience", { 
+                  required: "Please share your experience",
+                  minLength: {
+                    value: 10,
+                    message: "Review must be at least 10 characters long"
+                  }
+                })}
+                className="form-style resize-none min-h-[130px] w-full"
               />
               {errors.courseExperience && (
                 <span className="ml-2 text-xs tracking-wide text-pink-200">
-                  Please Add Your Experience
+                  {errors.courseExperience.message}
                 </span>
               )}
             </div>
-            <div className="mt-6 flex w-11/12 justify-end gap-x-2">
+            <div className="mt-6 flex w-full justify-end gap-x-4">
               <button
                 onClick={() => setReviewModal(false)}
-                className={`flex cursor-pointer items-center gap-x-2 rounded-md bg-richblack-300 py-[8px] px-[20px] font-semibold text-richblack-900`}
+                className={`flex cursor-pointer items-center gap-x-2 rounded-md bg-richblack-300 py-[8px] px-[20px] font-semibold text-richblack-900 hover:bg-richblack-400 transition-colors`}
+                type="button"
               >
                 Cancel
               </button>
-              <IconBtn text="Save" />
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className={`flex cursor-pointer items-center gap-x-2 rounded-md bg-yellow-50 py-[8px] px-[20px] font-semibold text-richblack-900 hover:bg-yellow-100 transition-colors ${
+                  isSubmitting ? 'opacity-50 cursor-not-allowed' : ''
+                }`}
+              >
+                {isSubmitting ? 'Submitting...' : 'Submit Review'}
+              </button>
             </div>
           </form>
         </div>

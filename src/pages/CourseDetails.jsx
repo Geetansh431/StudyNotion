@@ -4,6 +4,7 @@ import { HiOutlineGlobeAlt } from "react-icons/hi"
 import { ReactMarkdown } from "react-markdown/lib/react-markdown"
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate, useParams } from "react-router-dom"
+import { FaStar } from "react-icons/fa"
 
 import ConfirmationModal from "../components/common/ConfirmationModal"
 import Footer from "../components/common/Footer"
@@ -126,7 +127,7 @@ function CourseDetails() {
   }
 
   return (
-    <>
+    <div className="text-white">
       <div className={`relative w-full bg-richblack-800`}>
         {/* Hero Section */}
         <div className="mx-auto box-content px-4 lg:w-[1260px] 2xl:relative ">
@@ -149,7 +150,7 @@ function CourseDetails() {
               </div>
               <p className={`text-richblack-200`}>{courseDescription}</p>
               <div className="text-md flex flex-wrap items-center gap-2">
-                <span className="text-yellow-25">{avgReviewCount}</span>
+                <span className="text-yellow-25">{avgReviewCount.toFixed(1)}</span>
                 <RatingStars Review_Count={avgReviewCount} Star_Size={24} />
                 <span>{`(${ratingAndReviews.length} reviews)`}</span>
                 <span>{`${studentsEnrolled.length} students enrolled`}</span>
@@ -261,7 +262,142 @@ function CourseDetails() {
       </div>
       <Footer />
       {confirmationModal && <ConfirmationModal modalData={confirmationModal} />}
-    </>
+
+      {/* Reviews Section */}
+      <div className="mt-12 border-t border-richblack-700 py-8">
+        <h2 className="mb-8 text-3xl font-bold text-richblack-5">Course Reviews</h2>
+        <div className="flex flex-col gap-8">
+          {/* Overall Rating */}
+          <div className="flex items-center gap-4">
+            <div className="flex flex-col items-center justify-center rounded-full bg-richblack-700 p-8">
+              <span className="text-4xl font-bold text-yellow-25">{avgReviewCount.toFixed(1)}</span>
+              <div className="flex items-center gap-1">
+                <RatingStars Review_Count={avgReviewCount} Star_Size={20} />
+                <span className="text-sm text-richblack-400">
+                  ({ratingAndReviews.length} reviews)
+                </span>
+              </div>
+            </div>
+            <div className="flex-1">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <span className="text-richblack-5">5</span>
+                  <FaStar className="text-yellow-25" />
+                </div>
+                <div className="h-2 w-48 rounded-full bg-richblack-700">
+                  <div 
+                    className="h-full rounded-full bg-yellow-25"
+                    style={{ 
+                      width: `${(ratingAndReviews.filter(r => r.rating === 5).length / ratingAndReviews.length) * 100}%` 
+                    }}
+                  />
+                </div>
+                <span className="text-sm text-richblack-400">
+                  {ratingAndReviews.filter(r => r.rating === 5).length}
+                </span>
+              </div>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <span className="text-richblack-5">4</span>
+                  <FaStar className="text-yellow-25" />
+                </div>
+                <div className="h-2 w-48 rounded-full bg-richblack-700">
+                  <div 
+                    className="h-full rounded-full bg-yellow-25"
+                    style={{ 
+                      width: `${(ratingAndReviews.filter(r => r.rating === 4).length / ratingAndReviews.length) * 100}%` 
+                    }}
+                  />
+                </div>
+                <span className="text-sm text-richblack-400">
+                  {ratingAndReviews.filter(r => r.rating === 4).length}
+                </span>
+              </div>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <span className="text-richblack-5">3</span>
+                  <FaStar className="text-yellow-25" />
+                </div>
+                <div className="h-2 w-48 rounded-full bg-richblack-700">
+                  <div 
+                    className="h-full rounded-full bg-yellow-25"
+                    style={{ 
+                      width: `${(ratingAndReviews.filter(r => r.rating === 3).length / ratingAndReviews.length) * 100}%` 
+                    }}
+                  />
+                </div>
+                <span className="text-sm text-richblack-400">
+                  {ratingAndReviews.filter(r => r.rating === 3).length}
+                </span>
+              </div>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <span className="text-richblack-5">2</span>
+                  <FaStar className="text-yellow-25" />
+                </div>
+                <div className="h-2 w-48 rounded-full bg-richblack-700">
+                  <div 
+                    className="h-full rounded-full bg-yellow-25"
+                    style={{ 
+                      width: `${(ratingAndReviews.filter(r => r.rating === 2).length / ratingAndReviews.length) * 100}%` 
+                    }}
+                  />
+                </div>
+                <span className="text-sm text-richblack-400">
+                  {ratingAndReviews.filter(r => r.rating === 2).length}
+                </span>
+              </div>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <span className="text-richblack-5">1</span>
+                  <FaStar className="text-yellow-25" />
+                </div>
+                <div className="h-2 w-48 rounded-full bg-richblack-700">
+                  <div 
+                    className="h-full rounded-full bg-yellow-25"
+                    style={{ 
+                      width: `${(ratingAndReviews.filter(r => r.rating === 1).length / ratingAndReviews.length) * 100}%` 
+                    }}
+                  />
+                </div>
+                <span className="text-sm text-richblack-400">
+                  {ratingAndReviews.filter(r => r.rating === 1).length}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Reviews List */}
+          <div className="space-y-6">
+            {ratingAndReviews.map((review, index) => (
+              <div key={index} className="rounded-lg bg-richblack-800 p-6">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-4">
+                    <img
+                      src={review.user?.image || `https://api.dicebear.com/5.x/initials/svg?seed=${review.user?.firstName} ${review.user?.lastName}`}
+                      alt={`${review.user?.firstName} ${review.user?.lastName}`}
+                      className="h-10 w-10 rounded-full object-cover"
+                    />
+                    <div>
+                      <h3 className="font-semibold text-richblack-5">
+                        {`${review.user?.firstName} ${review.user?.lastName}`}
+                      </h3>
+                      <div className="flex items-center gap-2">
+                        <RatingStars Review_Count={review.rating} Star_Size={16} />
+                        <span className="text-sm text-richblack-400">
+                          {new Date(review.createdAt).toLocaleDateString()}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <p className="mt-4 text-richblack-200">{review.review}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }
 

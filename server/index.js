@@ -30,12 +30,12 @@ app.use(cookieParser());
 
 app.use(
 	cors({
+		
 		origin:"https://study-notion-theta-dusky.vercel.app",
 		credentials:true,
 	})
 )
 
-// stores the file in tmp directory before 
 
 app.use(
 	fileUpload({
