@@ -47,10 +47,18 @@ export async function buyCourse(token, courses, userDetails, navigate, dispatch)
         }
         console.log("PRINTING orderResponse", orderResponse);
         //options
+        // Check if Razorpay key is available
+        const razorpayKey = process.env.REACT_APP_RAZORPAY_KEY;
+        
+        if(!razorpayKey) {
+            toast.error("Payment configuration error. Please contact support.");
+            return;
+        }
+
         // console.log("Printing Cuurrecnhtfgf")
         // console.log("Printing Cuurrecnhtfgf",orderResponse.data.data.currency);
         const options = {
-            key: process.env.RAZORPAY_KEY,
+            key: razorpayKey,
             currency: orderResponse.data.data.currency,
             amount: `${orderResponse.data.data.amount}`,
             order_id:orderResponse.data.data.id,
@@ -69,7 +77,7 @@ export async function buyCourse(token, courses, userDetails, navigate, dispatch)
             }
    
         }
-        console.log("OPTISOFJSJFHSD ",options);
+        console.log("PAYMENT OPTIONS: ",options);
         //miss hogya tha 
         const paymentObject = new window.Razorpay(options);
         paymentObject.open();
