@@ -5,6 +5,9 @@
 html,
 body {
   overflow-x: hidden;
+  overscroll-behavior: none;           /* Disables overscroll in all directions */
+  overscroll-behavior-x: none;         /* Specifically disables horizontal overscroll */
+  overscroll-behavior-y: none;         /* Specifically disables vertical overscroll */
 }
 
 /* ===== Scrollbar CSS ===== */
