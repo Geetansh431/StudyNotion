@@ -1,0 +1,10 @@
+{
+  "*.{ts,tsx}": [
+    "prettier --config config/prettier/.prettierrc.js --write",
+    "eslint --config config/eslint/eslint.config.js --fix"
+  ],
+  "*.{json,md,css}": [
+    "prettier --config config/prettier/.prettierrc.js --write"
+  ]
+}
+

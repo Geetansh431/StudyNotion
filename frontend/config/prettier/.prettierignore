@@ -1,0 +1,17 @@
+# Dependencies
+node_modules
+
+# Build outputs
+dist
+build
+coverage
+
+# Cache
+.cache
+.vite
+.turbo
+
+# Logs
+*.log
+
+
