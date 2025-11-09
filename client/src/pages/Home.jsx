@@ -6,7 +6,6 @@ import { Link } from "react-router-dom"
 import Banner from "../assets/Images/banner.mp4"
 // Component Imports
 import Footer from "../components/common/Footer"
-import ReviewSlider from "../components/common/ReviewSlider"
 import CTAButton from "../components/core/HomePage/Button"
 import CodeBlocks from "../components/core/HomePage/CodeBlocks"
 import ExploreMore from "../components/core/HomePage/ExploreMore"
@@ -22,22 +21,22 @@ function Home() {
       <div className="relative mx-auto flex w-11/12 max-w-maxContent flex-col items-center justify-between gap-8 text-white">
         {/* Become a Instructor Button */}
         <Link to={"/signup"}>
-          <div className="group mx-auto mt-16 w-fit rounded-full bg-richblack-800 p-1 font-bold text-richblack-200 drop-shadow-[0_1.5px_rgba(255,255,255,0.25)] transition-all duration-200 hover:scale-95 hover:drop-shadow-none">
-            <div className="flex flex-row items-center gap-2 rounded-full px-10 py-[5px] transition-all duration-200 group-hover:bg-richblack-900">
+          <div className="group mx-auto mt-16 w-fit rounded-full bg-richblack-800 p-1 font-semibold text-richblack-200 shadow-lg border border-richblack-700 transition-all duration-200 hover:scale-105 hover:shadow-xl hover:border-richblack-600">
+            <div className="flex flex-row items-center gap-2 rounded-full px-10 py-2.5 transition-all duration-200 group-hover:bg-richblack-900 group-hover:text-yellow-50">
               <p>Become an Instructor</p>
-              <FaArrowRight />
+              <FaArrowRight className="transition-transform duration-200 group-hover:translate-x-1" />
             </div>
           </div>
         </Link>
 
         {/* Heading */}
-        <div className="text-center text-4xl font-semibold">
+        <div className="text-center text-4xl md:text-5xl font-bold leading-tight">
           Empower Your Future with
-          <HighlightText text={"Coding Skills"} />
+          <HighlightText text={" Coding Skills"} />
         </div>
 
         {/* Sub Heading */}
-        <div className="-mt-3 w-[90%] text-center text-lg font-bold text-richblack-300">
+        <div className="-mt-3 w-[90%] md:w-[80%] text-center text-base md:text-lg font-medium text-richblack-200 leading-relaxed">
           With our online coding courses, you can learn at your own pace, from
           anywhere in the world, and get access to a wealth of resources,
           including hands-on projects, quizzes, and personalized feedback from
@@ -55,9 +54,9 @@ function Home() {
         </div>
 
         {/* Video */}
-        <div className="mx-3 my-7 shadow-[10px_-5px_50px_-5px] shadow-blue-200">
+        <div className="mx-3 my-12 w-full max-w-5xl rounded-xl overflow-hidden shadow-[0_20px_50px_rgba(8,_112,_184,_0.7)] border border-richblack-700">
           <video
-            className="shadow-[20px_20px_rgba(255,255,255)]"
+            className="w-full h-full object-cover"
             muted
             loop
             autoPlay
@@ -67,13 +66,13 @@ function Home() {
         </div>
 
         {/* Code Section 1  */}
-        <div>
+        <div className="w-full">
           <CodeBlocks
             position={"lg:flex-row"}
             heading={
-              <div className="text-4xl font-semibold">
+              <div className="text-3xl md:text-4xl font-bold leading-tight">
                 Unlock your
-                <HighlightText text={"coding potential"} /> with our online
+                <HighlightText text={" coding potential"} /> with our online
                 courses.
               </div>
             }
@@ -97,13 +96,13 @@ function Home() {
         </div>
 
         {/* Code Section 2 */}
-        <div>
+        <div className="w-full">
           <CodeBlocks
             position={"lg:flex-row-reverse"}
             heading={
-              <div className="w-[100%] text-4xl font-semibold lg:w-[50%]">
+              <div className="w-[100%] text-3xl md:text-4xl font-bold leading-tight lg:w-[50%]">
                 Start
-                <HighlightText text={"coding in seconds"} />
+                <HighlightText text={" coding in seconds"} />
               </div>
             }
             subheading={
@@ -152,7 +151,7 @@ function Home() {
         <div className="mx-auto flex w-11/12 max-w-maxContent flex-col items-center justify-between gap-8 ">
           {/* Job that is in Demand - Section 1 */}
           <div className="mb-10 mt-[-100px] flex flex-col justify-between gap-7 lg:mt-20 lg:flex-row lg:gap-0">
-            <div className="text-4xl font-semibold lg:w-[45%] ">
+            <div className="text-3xl md:text-4xl font-bold lg:w-[45%] leading-tight">
               Get the skills you need for a{" "}
               <HighlightText text={"job that is in demand."} />
             </div>
@@ -180,12 +179,6 @@ function Home() {
       <div className="relative mx-auto my-20 flex w-11/12 max-w-maxContent flex-col items-center justify-between gap-8 bg-richblack-900 text-white">
         {/* Become a instructor section */}
         <InstructorSection />
-
-        {/* Reviws from Other Learner */}
-        <h1 className="text-center text-4xl font-semibold mt-8">
-          Reviews from other learners
-        </h1>
-        <ReviewSlider />
       </div>
 
       {/* Footer */}

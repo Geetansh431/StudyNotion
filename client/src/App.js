@@ -51,7 +51,7 @@ function App() {
       <Suspense fallback={<Loading />}>
         <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="catalog/:catalogName" element={<Catalog />} />
+        <Route path="courses" element={<Catalog />} />
         <Route path="courses/:courseId" element={<CourseDetails />} />
 
         <Route

@@ -1,13 +1,10 @@
 import { useEffect, useState } from "react"
 import { AiOutlineMenu, AiOutlineShoppingCart, AiOutlineClose } from "react-icons/ai"
-import { BsChevronDown } from "react-icons/bs"
 import { useSelector } from "react-redux"
 import { Link, matchPath, useLocation } from "react-router-dom"
 
 import logo from "../../assets/Logo/Logo-Full-Light.png"
 import { NavbarLinks } from "../../data/navbar-links"
-import { apiConnector } from "../../services/apiconnector"
-import { categories } from "../../services/apis"
 import { ACCOUNT_TYPE } from "../../utils/constants"
 import ProfileDropdown from "../core/Auth/ProfileDropDown"
 
@@ -17,24 +14,6 @@ function Navbar() {
   const { totalItems } = useSelector((state) => state.cart)
   const location = useLocation()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [catalogOpen, setCatalogOpen] = useState(false)
-
-  const [subLinks, setSubLinks] = useState([])
-  const [loading, setLoading] = useState(false)
-
-  useEffect(() => {
-    (async () => {
-      setLoading(true)
-      try {
-        const res = await apiConnector("GET", categories.CATEGORIES_API)
-        setSubLinks(res.data.data || [])
-      } catch (error) {
-        console.log("Could not fetch Categories.", error)
-        setSubLinks([])
-      }
-      setLoading(false)
-    })()
-  }, [])
 
   // Close mobile menu when location changes
   useEffect(() => {
@@ -48,7 +27,7 @@ function Navbar() {
   return (
     <div
       className={`flex h-14 items-center justify-center border-b-[1px] border-b-black ${location.pathname !== "/" ? "bg-richblack-800" : ""
-        } transition-all duration-200`}
+        } transition-all duration-200 relative z-50`}
     >
       <div className="flex w-11/12 max-w-maxContent items-center justify-between">
         {/* Logo */}
@@ -60,55 +39,16 @@ function Navbar() {
           <ul className="flex gap-x-6 text-black">
             {NavbarLinks.map((link, index) => (
               <li key={index}>
-                {link.title === "Catalog" ? (
-                  <>
-                    <div
-                      className={`group relative flex cursor-pointer items-center gap-1 ${matchRoute("/catalog/:catalogName")
-                          ? "text-yellow-25"
-                          : "text-richblack-25"
-                        }`}
-                    >
-                      <p>{link.title}</p>
-                      <BsChevronDown />
-                      <div className="invisible absolute left-[50%] top-[50%] z-[1000] flex w-[200px] translate-x-[-50%] translate-y-[3em] flex-col rounded-lg bg-richblack-5 p-4 text-richblack-900 opacity-0 transition-all duration-150 group-hover:visible group-hover:translate-y-[1.65em] group-hover:opacity-100 lg:w-[300px]">
-                        <div className="absolute left-[50%] top-0 -z-10 h-6 w-6 translate-x-[80%] translate-y-[-40%] rotate-45 select-none rounded bg-richblack-5"></div>
-                        {loading ? (
-                          <p className="text-center">Loading...</p>
-                        ) : subLinks.length ? (
-                          <>
-                            {subLinks
-                              .filter(subLink => subLink?.courses?.length > 0)
-                              .map((subLink, i) => (
-                                <Link
-                                  to={`/catalog/${subLink.name
-                                    .split(" ")
-                                    .join("-")
-                                    .toLowerCase()}`}
-                                  className="rounded-lg bg-transparent py-4 pl-4 hover:bg-richblack-50"
-                                  key={i}
-                                >
-                                  <p>{subLink.name}</p>
-                                </Link>
-                              ))}
-                          </>
-                        ) : (
-                          <p className="text-center">No Courses Found</p>
-                        )}
-                      </div>
-                    </div>
-                  </>
-                ) : (
-                  <Link to={link?.path}>
-                    <p
-                      className={`${matchRoute(link?.path)
-                          ? "text-yellow-25"
-                          : "text-richblack-25"
-                        }`}
-                    >
-                      {link.title}
-                    </p>
-                  </Link>
-                )}
+                <Link to={link?.path}>
+                  <p
+                    className={`${matchRoute(link?.path)
+                        ? "text-yellow-25"
+                        : "text-richblack-25"
+                      }`}
+                  >
+                    {link.title}
+                  </p>
+                </Link>
               </li>
             ))}
           </ul>
@@ -182,58 +122,16 @@ function Navbar() {
               <nav className="flex flex-col gap-2">
                 {NavbarLinks.map((link, index) => (
                   <div key={index} className="border-b border-richblack-700 pb-2">
-                    {link.title === "Catalog" ? (
-                      <div className="relative">
-                        <button
-                          className="flex w-full items-center justify-between py-2 text-richblack-25 hover:text-yellow-25 transition-colors"
-                          onClick={() => setCatalogOpen(!catalogOpen)}
-                        >
-                          <span>{link.title}</span>
-                          <BsChevronDown className={`transition-transform duration-200 ${catalogOpen ? 'rotate-180' : ''}`} />
-                        </button>
-                        <div className={`overflow-hidden transition-all duration-200 ${catalogOpen ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'}`}>
-                          <div className="mt-2 pl-4">
-                            {loading ? (
-                              <p className="text-center text-richblack-25">Loading...</p>
-                            ) : subLinks.length ? (
-                              <>
-                                {subLinks
-                                  .filter(subLink => subLink?.courses?.length > 0)
-                                  .map((subLink, i) => (
-                                    <Link
-                                      to={`/catalog/${subLink.name
-                                        .split(" ")
-                                        .join("-")
-                                        .toLowerCase()}`}
-                                      className="block py-2 text-richblack-25 hover:text-yellow-25 transition-colors"
-                                      key={i}
-                                      onClick={() => {
-                                        setMobileMenuOpen(false)
-                                        setCatalogOpen(false)
-                                      }}
-                                    >
-                                      {subLink.name}
-                                    </Link>
-                                  ))}
-                              </>
-                            ) : (
-                              <p className="text-center text-richblack-25">No Courses Found</p>
-                            )}
-                          </div>
-                        </div>
-                      </div>
-                    ) : (
-                      <Link
-                        to={link?.path}
-                        className={`block py-2 ${matchRoute(link?.path)
-                            ? "text-yellow-25"
-                            : "text-richblack-25 hover:text-yellow-25"
-                          } transition-colors`}
-                        onClick={() => setMobileMenuOpen(false)}
-                      >
-                        {link.title}
-                      </Link>
-                    )}
+                    <Link
+                      to={link?.path}
+                      className={`block py-2 ${matchRoute(link?.path)
+                          ? "text-yellow-25"
+                          : "text-richblack-25 hover:text-yellow-25"
+                        } transition-colors`}
+                      onClick={() => setMobileMenuOpen(false)}
+                    >
+                      {link.title}
+                    </Link>
                   </div>
                 ))}
               </nav>
