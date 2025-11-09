@@ -5,13 +5,14 @@ import { courseEndpoints } from '../services/apis';
 import Course_Card from '../components/core/Catalog/Course_Card';
 import { useSelector } from "react-redux"
 import { HiSparkles, HiAcademicCap } from "react-icons/hi"
-import { IoFilter } from "react-icons/io5"
+import { IoSearch } from "react-icons/io5"
 
 const Catalog = () => {
   const { loading } = useSelector((state) => state.profile)
   const [allCourses, setAllCourses] = useState([]);
-  const [sortBy, setSortBy] = useState("latest");
   const [priceFilter, setPriceFilter] = useState("all");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchInput, setSearchInput] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
   // Fetch all courses
@@ -36,8 +37,8 @@ const Catalog = () => {
   }, []);
 
 
-  // Filter and sort courses
-  const getFilteredAndSortedCourses = () => {
+  // Filter courses
+  const getFilteredCourses = () => {
     let filtered = [...allCourses];
 
     // Price filter
@@ -47,19 +48,27 @@ const Catalog = () => {
       filtered = filtered.filter(course => course.price > 0);
     }
 
-    // Sort
-    if (sortBy === "priceLow") {
-      filtered.sort((a, b) => a.price - b.price);
-    } else if (sortBy === "priceHigh") {
-      filtered.sort((a, b) => b.price - a.price);
-    } else if (sortBy === "popular") {
-      filtered.sort((a, b) => (b.studentsEnrolled?.length || 0) - (a.studentsEnrolled?.length || 0));
+    // Search filter
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase();
+      filtered = filtered.filter(course => 
+        course.courseName?.toLowerCase().includes(query) ||
+        course.courseDescription?.toLowerCase().includes(query) ||
+        course.instructor?.firstName?.toLowerCase().includes(query) ||
+        course.instructor?.lastName?.toLowerCase().includes(query)
+      );
     }
 
     return filtered;
   };
 
-  const displayedCourses = getFilteredAndSortedCourses();
+  // Handle search
+  const handleSearch = (e) => {
+    e.preventDefault();
+    setSearchQuery(searchInput);
+  };
+
+  const displayedCourses = getFilteredCourses();
 
   if (loading || isLoading) {
     return (
@@ -101,9 +110,9 @@ const Catalog = () => {
       {/* Main Content */}
       <div className="bg-richblack-900 min-h-screen">
         <div className="mx-auto w-11/12 max-w-maxContent py-12">
-          {/* Filters & Sort Bar */}
-          <div className="mb-8 flex flex-col md:flex-row gap-4 justify-between items-start md:items-center animate-fadeIn">
-            {/* Left: Course Count & Filter */}
+          {/* Filters & Search Bar */}
+          <div className="mb-8 flex flex-col lg:flex-row gap-6 justify-between items-start lg:items-center animate-fadeIn">
+            {/* Left: Course Count & Price Filters */}
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
               <div className="flex items-center gap-2">
                 <HiSparkles className="text-yellow-50 text-xl" />
@@ -112,7 +121,7 @@ const Catalog = () => {
                 </p>
               </div>
 
-              {/* Quick Filters */}
+              {/* Quick Price Filters */}
               <div className="flex gap-2">
                 <button
                   onClick={() => setPriceFilter("all")}
@@ -147,20 +156,37 @@ const Catalog = () => {
               </div>
             </div>
 
-            {/* Right: Sort Dropdown */}
-            <div className="flex items-center gap-2">
-              <IoFilter className="text-richblack-300" />
-              <select
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value)}
-                className="bg-richblack-800 text-richblack-5 px-4 py-2 rounded-lg border border-richblack-700 focus:border-yellow-50 focus:outline-none transition-all cursor-pointer hover:bg-richblack-700"
+            {/* Right: Search Bar */}
+            <form onSubmit={handleSearch} className="flex gap-2 w-full lg:w-auto">
+              <div className="relative flex-1 lg:w-80">
+                <input
+                  type="text"
+                  value={searchInput}
+                  onChange={(e) => setSearchInput(e.target.value)}
+                  placeholder="Search courses, instructors..."
+                  className="w-full bg-richblack-800 text-richblack-5 px-4 py-2 pl-10 rounded-lg border border-richblack-700 focus:border-yellow-50 focus:outline-none transition-all placeholder:text-richblack-400"
+                />
+                <IoSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-richblack-400 text-lg" />
+              </div>
+              <button
+                type="submit"
+                className="px-6 py-2 bg-yellow-50 text-richblack-900 rounded-lg font-semibold hover:scale-105 transition-transform shadow-lg shadow-yellow-50/20"
               >
-                <option value="latest">Latest First</option>
-                <option value="priceLow">Price: Low to High</option>
-                <option value="priceHigh">Price: High to Low</option>
-                <option value="popular">Most Popular</option>
-              </select>
-            </div>
+                Search
+              </button>
+              {searchQuery && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setSearchQuery("");
+                    setSearchInput("");
+                  }}
+                  className="px-4 py-2 bg-richblack-800 text-richblack-100 rounded-lg font-medium hover:bg-richblack-700 transition-all"
+                >
+                  Clear
+                </button>
+              )}
+            </form>
           </div>
 
           {/* Courses Grid */}
@@ -189,12 +215,13 @@ const Catalog = () => {
                   No courses found
                 </p>
                 <p className="text-richblack-300">
-                  Try adjusting your filters to see more courses
+                  Try a different search query or browse all courses
                 </p>
                 <button
                   onClick={() => {
+                    setSearchQuery("");
+                    setSearchInput("");
                     setPriceFilter("all");
-                    setSortBy("latest");
                   }}
                   className="mt-4 px-6 py-3 bg-yellow-50 text-richblack-900 rounded-lg font-semibold hover:scale-105 transition-transform"
                 >
