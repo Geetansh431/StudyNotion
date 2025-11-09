@@ -1,5 +1,6 @@
 # Dependencies
 node_modules/
+<<<<<<< HEAD
 client/node_modules/
 server/node_modules/
 /.pnp
@@ -16,14 +17,22 @@ server/node_modules/
 client/build/
 client/dist/
 
+=======
+/.pnp
+.pnp.js
+
+>>>>>>> 029d5c50ca1c2a3d51020e54177631b7f2b91389
 # Environment variables
 .env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
+<<<<<<< HEAD
 server/.env
 client/.env
+=======
+>>>>>>> 029d5c50ca1c2a3d51020e54177631b7f2b91389
 
 # Logs
 logs
@@ -32,6 +41,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
+<<<<<<< HEAD
 pnpm-debug.log*
 
 # Runtime data
@@ -51,10 +61,19 @@ temp/
 Thumbs.db
 
 # IDE & Editor files
+=======
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+>>>>>>> 029d5c50ca1c2a3d51020e54177631b7f2b91389
 .vscode/
 .idea/
 *.swp
 *.swo
+<<<<<<< HEAD
 *~
 .project
 .classpath
@@ -124,3 +143,15 @@ dumps/
 
 # Build artifacts
 *.tsbuildinfo
+=======
+
+# Temporary files
+temp/
+tmp/
+*.tmp
+
+# Build files
+dist/
+build/
+
+>>>>>>> 029d5c50ca1c2a3d51020e54177631b7f2b91389
