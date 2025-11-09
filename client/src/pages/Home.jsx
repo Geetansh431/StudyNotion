@@ -2,8 +2,6 @@
 import { FaArrowRight } from "react-icons/fa"
 import { Link } from "react-router-dom"
 
-// Image and Video Import
-import Banner from "../assets/Images/banner.mp4"
 // Component Imports
 import Footer from "../components/common/Footer"
 import CTAButton from "../components/core/HomePage/Button"
@@ -13,6 +11,7 @@ import HighlightText from "../components/core/HomePage/HighlightText"
 import InstructorSection from "../components/core/HomePage/InstructorSection"
 import LearningLanguageSection from "../components/core/HomePage/LearningLanguageSection"
 import TimelineSection from "../components/core/HomePage/TimelineSection"
+import VideoSection from "../components/core/HomePage/VideoSection"
 
 function Home() {
   return (
@@ -21,10 +20,10 @@ function Home() {
       <div className="relative mx-auto flex w-11/12 max-w-maxContent flex-col items-center justify-between gap-8 text-white">
         {/* Become a Instructor Button */}
         <Link to={"/signup"}>
-          <div className="group mx-auto mt-16 w-fit rounded-full bg-richblack-800 p-1 font-semibold text-richblack-200 shadow-lg border border-richblack-700 transition-all duration-200 hover:scale-105 hover:shadow-xl hover:border-richblack-600">
-            <div className="flex flex-row items-center gap-2 rounded-full px-10 py-2.5 transition-all duration-200 group-hover:bg-richblack-900 group-hover:text-yellow-50">
+          <div className="group mx-auto mt-16 w-fit rounded-full bg-richblack-800 p-1 font-semibold text-richblack-200 shadow-lg border border-richblack-700 transition-all duration-200">
+            <div className="flex flex-row items-center gap-2 rounded-full px-10 py-2.5 transition-all duration-200">
               <p>Become an Instructor</p>
-              <FaArrowRight className="transition-transform duration-200 group-hover:translate-x-1" />
+              <FaArrowRight />
             </div>
           </div>
         </Link>
@@ -52,19 +51,13 @@ function Home() {
             Book a Demo
           </CTAButton>
         </div>
+      </div>
 
-        {/* Video */}
-        <div className="mx-3 my-12 w-full max-w-5xl rounded-xl overflow-hidden shadow-[0_20px_50px_rgba(8,_112,_184,_0.7)] border border-richblack-700">
-          <video
-            className="w-full h-full object-cover"
-            muted
-            loop
-            autoPlay
-          >
-            <source src={Banner} type="video/mp4" />
-          </video>
-        </div>
+      {/* Video Section with Pinning Effect */}
+      <VideoSection />
 
+      {/* Section 1 Continued */}
+      <div className="relative mx-auto flex w-11/12 max-w-maxContent flex-col items-center justify-between gap-8 text-white">
         {/* Code Section 1  */}
         <div className="w-full">
           <CodeBlocks
