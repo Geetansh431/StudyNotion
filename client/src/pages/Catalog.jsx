@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Footer from '../components/common/Footer'
 import { apiConnector } from '../services/apiconnector';
 import { courseEndpoints } from '../services/apis';
-import Course_Card from '../components/core/Catalog/Course_Card';
+import CourseCard from '../components/core/Catalog/Course_Card';
 import { useSelector } from "react-redux"
 import { HiSparkles, HiAcademicCap } from "react-icons/hi"
 import { IoSearch } from "react-icons/io5"
@@ -198,7 +198,7 @@ const Catalog = () => {
                   className="animate-fadeInUp"
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
-                  <Course_Card 
+                  <CourseCard 
                     course={course} 
                     Height={"h-[300px]"} 
                   />
